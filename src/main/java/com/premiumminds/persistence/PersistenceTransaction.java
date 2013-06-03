@@ -5,4 +5,5 @@ public interface PersistenceTransaction {
 	public void end();
 	public void setRollbackOnly();
 	public boolean isRollbackOnly();
+	public void registerSynchronization(PersistenceTransactionSynchronization synchronization);
 }
