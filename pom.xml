@@ -4,7 +4,7 @@
 
 	<groupId>com.premiumminds</groupId>
 	<artifactId>persistence-utils</artifactId>
-	<version>0.1.1</version>
+	<version>0.1.2</version>
 	<packaging>jar</packaging>
 
 	<name>java-persistence-utils</name>
@@ -27,9 +27,9 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.16</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.5</version>
 			<scope>provided</scope>
 		</dependency>
 

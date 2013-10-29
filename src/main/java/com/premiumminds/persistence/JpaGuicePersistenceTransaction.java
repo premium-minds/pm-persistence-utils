@@ -7,14 +7,15 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.inject.Provider;
 import com.google.inject.persist.UnitOfWork;
 import com.premiumminds.persistence.PersistenceTransactionSynchronization.Status;
 
 public class JpaGuicePersistenceTransaction implements PersistenceTransaction {
-	private static final Logger log = Logger.getLogger(JpaGuicePersistenceTransaction.class);
+	private static final Logger log = LoggerFactory.getLogger(JpaGuicePersistenceTransaction.class);
 
 	private UnitOfWork unitOfWork;
 	private Provider<EntityManager> emp;
