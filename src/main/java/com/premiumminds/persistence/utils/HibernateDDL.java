@@ -41,7 +41,7 @@ public class HibernateDDL {
 		}
 	}
 
-	private static void updateCommand(String[] args) {
+	protected static void updateCommand(String[] args) {
 		String unitName, filename=null, url, username, password;
 		if(args.length<5) System.out.println("Expected unitName jdbcUrl jdbcUsername jdbcPassword");
 		else {
@@ -68,7 +68,7 @@ public class HibernateDDL {
 		}
 	}
 
-	private static void createDropCommand(String[] args) {
+	protected static void createDropCommand(String[] args) {
 		String unitName;
 		String filename=null;
 		if(args.length<2) System.out.println("Expected unitName");
@@ -85,7 +85,7 @@ public class HibernateDDL {
 		}
 	}
 
-	private static void createCommand(String[] args) {
+	protected static void createCommand(String[] args) {
 		String unitName;
 		String filename=null;
 		if(args.length<2) System.out.println("Expected unitName");
@@ -101,12 +101,12 @@ public class HibernateDDL {
 		}
 	}
 
-	private static Configuration getConfiguration(String unitName){
+	protected static Configuration getConfiguration(String unitName){
 		Ejb3Configuration jpaConfiguration = new Ejb3Configuration().configure(unitName, null);
 		return jpaConfiguration.getHibernateConfiguration();
 	}
 	
-	private static void stringToStream(String[] sql, String filename){
+	protected static void stringToStream(String[] sql, String filename){
 		PrintWriter writer;
 		try {
 			if(filename==null) writer = new PrintWriter(System.out);
