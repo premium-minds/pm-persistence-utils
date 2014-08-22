@@ -3,7 +3,7 @@
 
 	<groupId>com.premiumminds</groupId>
 	<artifactId>pm-persistence-utils</artifactId>
-	<version>1.0</version>
+	<version>1.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>pm-persistence-utils</name>
@@ -27,7 +27,7 @@
 		<url>https://github.com/premium-minds/pm-persistence-utils</url>
 		<connection>scm:git:git@github.com:premium-minds/pm-persistence-utils.git</connection>
 		<developerConnection>scm:git:git@github.com:premium-minds/pm-persistence-utils.git</developerConnection>
-	  <tag>v1.0</tag>
+	  <tag>HEAD</tag>
   </scm>
 
 	<properties>
