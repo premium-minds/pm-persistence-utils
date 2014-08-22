@@ -4,13 +4,13 @@
 
 	<groupId>com.premiumminds</groupId>
 	<artifactId>pm-persistence-utils</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>pm-persistence-utils</name>
 	<description>A library with utils for JPA persistence applications, and some Hibernate stuff</description>
 	<inceptionYear>2014</inceptionYear>
-	
+
 	<organization>
 		<name>Premium Minds</name>
 		<url>http://www.premium-minds.com</url>
@@ -21,7 +21,7 @@
 			<name>GNU LESSER GENERAL PUBLIC LICENSE</name>
 			<url>http://www.gnu.org/licenses/lgpl.html</url>
 		</license>
-	</licenses>	
+	</licenses>
 
 	<url>https://github.com/premium-minds/pm-persistence-utils</url>
 	<scm>
@@ -109,7 +109,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>com.mycila.maven-license-plugin</groupId>
 				<artifactId>maven-license-plugin</artifactId>
@@ -134,8 +134,24 @@
 						<owner>Premium Minds</owner>
 					</properties>
 				</configuration>
-			</plugin>			
-			
+			</plugin>
+
 		</plugins>
 	</build>
+
+	<distributionManagement>
+
+		<snapshotRepository>
+			<id>premiumminds-nexus-snapshots</id>
+			<name>premiumminds-nexus-snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots </url>
+		</snapshotRepository>
+
+		<repository>
+			<id>premiumminds-nexus-staging</id>
+			<name>premiumminds-nexus-staging</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2 </url>
+		</repository>
+
+	</distributionManagement>
 </project>
