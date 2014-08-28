@@ -15,6 +15,9 @@ Add the following maven dependency to your project `pom.xml`:
 ```
 Check out [sonatype repository](https://oss.sonatype.org/index.html#nexus-search;quick~pm-persistence-utils) for latest snapshots and releases.
 
+##Documentation
+- [Javadoc](http://premium-minds.github.io/pm-persistence-utils/apidocs/)
+
 ##Continuous Integration
 [![Build Status](https://travis-ci.org/premium-minds/pm-persistence-utils.png?branch=master)](https://travis-ci.org/premium-minds/pm-persistence-utils)
 
