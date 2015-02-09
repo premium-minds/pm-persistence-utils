@@ -39,9 +39,20 @@ public class MultiplePersistenceTransaction implements PersistenceTransaction {
 	@Override
 	public void start() {
 		log.debug("Starting application transaction");
-		for(PersistenceTransaction pt : persistenceTransactions){
-			pt.start();
-		}
+		try{
+			for(PersistenceTransaction pt : persistenceTransactions){
+				pt.start();
+			}
+		} catch(Exception e){
+			
+			for(PersistenceTransaction pt : persistenceTransactions){
+				try{
+					pt.setRollbackOnly();
+					pt.end();
+				} catch(Throwable t){ }
+			}
+			throw new RuntimeException("Aborting transaction start", e);
+		}		
 	}
 
 	@Override
