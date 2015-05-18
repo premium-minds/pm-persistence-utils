@@ -39,7 +39,7 @@
 	</developers>
 
 	<properties>
-		<hibernate.version>4.1.7.Final</hibernate.version>
+		<hibernate.version>4.3.10.Final</hibernate.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 

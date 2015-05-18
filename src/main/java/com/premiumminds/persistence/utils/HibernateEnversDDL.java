@@ -21,13 +21,15 @@ package com.premiumminds.persistence.utils;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.hibernate.cfg.Configuration;
 import org.hibernate.dialect.Dialect;
-import org.hibernate.envers.configuration.AuditConfiguration;
-import org.hibernate.tool.EnversSchemaGenerator;
+import org.hibernate.envers.configuration.spi.AuditConfiguration;
+import org.hibernate.envers.tools.hbm2ddl.EnversSchemaGenerator;
 import org.hibernate.tool.hbm2ddl.DatabaseMetadata;
 import org.hibernate.tool.hbm2ddl.SchemaUpdate;
+import org.hibernate.tool.hbm2ddl.SchemaUpdateScript;
 
 
 public class HibernateEnversDDL  {
@@ -107,8 +109,10 @@ public class HibernateEnversDDL  {
 			DatabaseMetadata meta = null;
 			try {
 				conn = DriverManager.getConnection(url, username, password);
-				meta = new DatabaseMetadata(conn, dialect, true);
-				String[] updateSQL = configuration.generateSchemaUpdateScript(dialect, meta);
+				meta = new DatabaseMetadata(conn, dialect, configuration, true);
+
+				List<SchemaUpdateScript> updateScriptList = configuration.generateSchemaUpdateScriptList(dialect, meta);
+				String[] updateSQL = SchemaUpdateScript.toStringArray(updateScriptList);
 				
 				HibernateDDL.stringToStream(updateSQL, filename);
 
