@@ -5,9 +5,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileReader;
 import java.io.PrintStream;
-import java.nio.file.Files;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -71,7 +72,8 @@ public class HibernateDDLTest {
 		HibernateDDL.main(args);
 
 		assertTrue(outContent.toString().isEmpty());
-		assertEquals("\n    alter table FooBar \n        add column bar integer not null;\n", new String(Files.readAllBytes(file.toPath())));
+		
+		assertEquals("\n    alter table FooBar \n        add column bar integer not null;\n", IOUtils.toString(new FileReader(file)));
 	}
 
 	@Test
@@ -107,7 +109,7 @@ public class HibernateDDLTest {
 					"        bar integer not null,\n" +
 					"        foo varchar(255),\n" +
 					"        primary key (id)\n" +
-					"    );\n", new String(Files.readAllBytes(file.toPath())));
+					"    );\n", IOUtils.toString(new FileReader(file)));
 	}
 	
 	@Test
@@ -147,6 +149,6 @@ public class HibernateDDLTest {
 					"        bar integer not null,\n" +
 					"        foo varchar(255),\n" +
 					"        primary key (id)\n" +
-					"    );\n", new String(Files.readAllBytes(file.toPath())));
+					"    );\n", IOUtils.toString(new FileReader(file)));
 	}
 }

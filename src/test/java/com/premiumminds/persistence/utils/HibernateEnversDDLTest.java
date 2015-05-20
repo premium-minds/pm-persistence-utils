@@ -5,9 +5,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileReader;
 import java.io.PrintStream;
-import java.nio.file.Files;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -76,7 +77,7 @@ public class HibernateEnversDDLTest {
 					"        add column bar integer not null;\n" +
 					"\n" +
 					"    alter table FooBar_AUD \n" + 
-					"        add column bar integer;\n", new String(Files.readAllBytes(file.toPath())));
+					"        add column bar integer;\n", IOUtils.toString(new FileReader(file)));
 	}
 
 	@Test
@@ -127,7 +128,7 @@ public class HibernateEnversDDLTest {
 					"        add constraint FK_hq6lvb9twe0idlwiwq4locy79 \n" +
 					"        foreign key (REV) \n" + 
 					"        references REVINFO;\n" + 
-					"", new String(Files.readAllBytes(file.toPath())));
+					"", IOUtils.toString(new FileReader(file)));
 	}
 
 	@Test
@@ -183,6 +184,6 @@ public class HibernateEnversDDLTest {
 				"    alter table FooBar_AUD \n" +
 				"        add constraint FK_hq6lvb9twe0idlwiwq4locy79 \n" +
 				"        foreign key (REV) \n" + 
-				"        references REVINFO;\n" , new String(Files.readAllBytes(file.toPath())));
+				"        references REVINFO;\n" , IOUtils.toString(new FileReader(file)));
 	}
 }
