@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Usage example:
  * 
- * Integer result = new TransactionWrapper<Integer>() {
+ * Integer result = new TransactionWrapper&lt;Integer&gt;() {
  * 
  *		public abstract Integer runTransaction() throws Throwable {
  *			...
@@ -76,8 +76,7 @@ public abstract class TransactionWrapper<T> {
 	/**
 	 * Executes the transaction wrapping steps
 	 * @return The transaction return value
-	 * @throws Throwable 
-	 * @throws Exception 
+	 * @throws Throwable execution exception
 	 */
 	public T execute() throws Throwable {
 		setupTransaction();

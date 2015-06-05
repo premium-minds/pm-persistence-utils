@@ -52,7 +52,7 @@ public class HibernateDDL {
 	 * --create-drop unitName [filename]
 	 * --update unitName jdbcUrl jdbcUsername jdbcPassword [filename]
 	 * 
-	 * @param args
+	 * @param args usage arguments
 	 */
 	public static void main(String[] args) {
 		if(args.length==0){

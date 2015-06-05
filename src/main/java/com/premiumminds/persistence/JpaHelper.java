@@ -24,6 +24,8 @@ import java.util.Map;
 public class JpaHelper {
 	/**
 	 * Transforms the list returned in a getResultList() in a Map with the first two fields returned by that query.
+	 * @param <K> key type
+	 * @param <V> value type
 	 * @param list with the array of objects to be saved
 	 * @param map where objects will be saved. Has to be initialized before with the right types of the objects in the list.
 	 * @return map
