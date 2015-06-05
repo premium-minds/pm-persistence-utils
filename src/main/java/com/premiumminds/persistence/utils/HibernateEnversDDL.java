@@ -21,13 +21,15 @@ package com.premiumminds.persistence.utils;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.hibernate.cfg.Configuration;
 import org.hibernate.dialect.Dialect;
-import org.hibernate.envers.configuration.AuditConfiguration;
-import org.hibernate.tool.EnversSchemaGenerator;
+import org.hibernate.envers.configuration.spi.AuditConfiguration;
+import org.hibernate.envers.tools.hbm2ddl.EnversSchemaGenerator;
 import org.hibernate.tool.hbm2ddl.DatabaseMetadata;
 import org.hibernate.tool.hbm2ddl.SchemaUpdate;
+import org.hibernate.tool.hbm2ddl.SchemaUpdateScript;
 
 
 public class HibernateEnversDDL  {
@@ -42,10 +44,10 @@ public class HibernateEnversDDL  {
 	public static void main(String[] args) {
 		if(args.length==0){
 			System.out.println("Usage: ");
-			System.out.println("\t--create unitName [filename] - Create table commands");
-			System.out.println("\t--create-drop unitName [filename] - Create table and drop commands");
-			System.out.println("\t--update unitName jdbcUrl jdbcUsername jdbcPassword [filename] - Alter table commands based on your database");
-			System.out.println("\n\t[filename] is the name of the file where to write (it's optional)");
+			System.out.println("\t--create unitName filename - Create table commands");
+			System.out.println("\t--create-drop unitName filename - Create table and drop commands");
+			System.out.println("\t--update unitName jdbcUrl jdbcUsername jdbcPassword filename - Alter table commands based on your database");
+			System.out.println("\n\tfilename is the name of the file where to write");
 		} else {
 			if("--create".equals(args[0].toLowerCase())) createCommand(args);
 			if("--create-drop".equals(args[0].toLowerCase())) createDropCommand(args);
@@ -55,12 +57,11 @@ public class HibernateEnversDDL  {
 	}
 
 	private static void createCommand(String[] args) {
-		String unitName;
-		String filename=null;
-		if(args.length<2) System.out.println("Expected unitName");
-		else {
-			unitName = args[1];
-			if(args.length>2) filename = args[2];
+		if(args.length<3){
+			System.out.println("Expected unitName and filename");
+		} else {
+			String unitName = args[1];
+			String filename = args[2];
 
 			EnversSchemaGenerator esg = new EnversSchemaGenerator(HibernateDDL.getConfiguration(unitName));
 			org.hibernate.tool.hbm2ddl.SchemaExport se = esg.export();
@@ -72,31 +73,30 @@ public class HibernateEnversDDL  {
 	}
 
 	private static void createDropCommand(String[] args) {
-		String unitName;
-		String filename=null;
-		if(args.length<2) System.out.println("Expected unitName");
-		else {
-			unitName = args[1];
-			if(args.length>2) filename = args[2];
+		if(args.length<3){
+			System.out.println("Expected unitName and filename");
+		} else {
+			String unitName = args[1];
+			String filename = args[2];
 
 			EnversSchemaGenerator esg = new EnversSchemaGenerator(HibernateDDL.getConfiguration(unitName));
 			org.hibernate.tool.hbm2ddl.SchemaExport se = esg.export();
 			se.setOutputFile(filename);
 			se.setFormat(true);
 			se.setDelimiter(";");
-			se.execute(false, false, true, true);
+			se.execute(false, false, false, false);
 		}
 	}
 
 	private static void updateCommand(String[] args) {
 		String unitName, filename=null, url, username, password;
-		if(args.length<5) System.out.println("Expected unitName jdbcUrl jdbcUsername jdbcPassword");
+		if(args.length<6) System.out.println("Expected unitName jdbcUrl jdbcUsername jdbcPassword filename");
 		else {
 			unitName = args[1];
 			url = args[2];
 			username = args[3];
 			password = args[4];
-			if(args.length>5) filename = args[5];
+			filename = args[5];
 			
 			Configuration configuration = HibernateDDL.getConfiguration(unitName);
 			configuration.buildMappings();
@@ -107,8 +107,10 @@ public class HibernateEnversDDL  {
 			DatabaseMetadata meta = null;
 			try {
 				conn = DriverManager.getConnection(url, username, password);
-				meta = new DatabaseMetadata(conn, dialect, true);
-				String[] updateSQL = configuration.generateSchemaUpdateScript(dialect, meta);
+				meta = new DatabaseMetadata(conn, dialect, configuration, true);
+
+				List<SchemaUpdateScript> updateScriptList = configuration.generateSchemaUpdateScriptList(dialect, meta);
+				String[] updateSQL = SchemaUpdateScript.toStringArray(updateScriptList);
 				
 				HibernateDDL.stringToStream(updateSQL, filename);
 

@@ -25,15 +25,25 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+import javax.persistence.PersistenceException;
 
 import org.hibernate.cfg.Configuration;
 import org.hibernate.dialect.Dialect;
-import org.hibernate.ejb.Ejb3Configuration;
 import org.hibernate.engine.jdbc.internal.FormatStyle;
 import org.hibernate.engine.jdbc.internal.Formatter;
+import org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl;
+import org.hibernate.jpa.boot.internal.ParsedPersistenceXmlDescriptor;
+import org.hibernate.jpa.boot.internal.PersistenceXmlParser;
+import org.hibernate.jpa.boot.spi.PersistenceUnitDescriptor;
+import org.hibernate.jpa.boot.spi.ProviderChecker;
+import org.hibernate.service.ServiceRegistry;
 import org.hibernate.tool.hbm2ddl.DatabaseMetadata;
+import org.hibernate.tool.hbm2ddl.SchemaUpdateScript;
 
-@SuppressWarnings("deprecation")
 public class HibernateDDL {
 	private final static Formatter formatter = FormatStyle.DDL.getFormatter();
 
@@ -75,10 +85,11 @@ public class HibernateDDL {
 			try {
 				Connection conn = DriverManager.getConnection(url, username, password);
 				
-				DatabaseMetadata meta = new DatabaseMetadata(conn, dialect, true);
-				
-				String[] updateSQL = config.generateSchemaUpdateScript(dialect, meta);
-				
+				DatabaseMetadata meta = new DatabaseMetadata(conn, dialect, config, true);
+
+				List<SchemaUpdateScript> updateScriptList = config.generateSchemaUpdateScriptList(dialect, meta);
+				String[] updateSQL = SchemaUpdateScript.toStringArray(updateScriptList);
+
 				stringToStream(updateSQL, filename);
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -86,6 +97,52 @@ public class HibernateDDL {
 		}
 	}
 
+	protected static EntityManagerFactoryBuilderImpl getEntityManagerFactoryBuilderOrNull(String persistenceUnitName, Map<String, Object> properties) {
+		return getEntityManagerFactoryBuilderOrNull( persistenceUnitName, properties, null );
+	}
+	
+	protected static EntityManagerFactoryBuilderImpl getEntityManagerFactoryBuilderOrNull(String persistenceUnitName, Map<String, Object> properties, ClassLoader providedClassLoader) {
+
+		final Map<String, Object> integration = wrap( properties );
+		final List<ParsedPersistenceXmlDescriptor> units;
+		try {
+			units = PersistenceXmlParser.locatePersistenceUnits( integration );
+		}
+		catch (Exception e) {
+			throw new PersistenceException( "Unable to locate persistence units", e );
+		}
+
+		if ( persistenceUnitName == null && units.size() > 1 ) {
+			throw new PersistenceException( "No name provided and multiple persistence units found" );
+		}
+
+		for ( ParsedPersistenceXmlDescriptor persistenceUnit : units ) {
+
+			final boolean matches = persistenceUnitName == null || persistenceUnit.getName().equals( persistenceUnitName );
+			if ( !matches ) {
+				continue;
+			}
+
+			// See if we (Hibernate) are the persistence provider
+			if ( ! ProviderChecker.isProvider( persistenceUnit, properties ) ) {
+				continue;
+			}
+
+			return getEntityManagerFactoryBuilder( persistenceUnit, integration, providedClassLoader );
+		}
+
+		return null;
+	}
+
+	protected static EntityManagerFactoryBuilderImpl getEntityManagerFactoryBuilder(PersistenceUnitDescriptor persistenceUnitDescriptor,
+			Map<String, Object> integration, ClassLoader providedClassLoader) {
+		return new EntityManagerFactoryBuilderImpl( persistenceUnitDescriptor, integration, providedClassLoader );
+	}
+
+	protected static Map<String, Object> wrap(Map<String, Object> properties) {
+		return properties == null ? Collections.<String, Object>emptyMap() : Collections.unmodifiableMap( properties );
+	}
+	
 	protected static void createDropCommand(String[] args) {
 		String unitName;
 		String filename=null;
@@ -120,8 +177,12 @@ public class HibernateDDL {
 	}
 
 	protected static Configuration getConfiguration(String unitName){
-		Ejb3Configuration jpaConfiguration = new Ejb3Configuration().configure(unitName, null);
-		return jpaConfiguration.getHibernateConfiguration();
+		EntityManagerFactoryBuilderImpl entityManagerFactoryBuilder = getEntityManagerFactoryBuilderOrNull(unitName, null);
+		
+		ServiceRegistry serviceRegistry = entityManagerFactoryBuilder.buildServiceRegistry();
+		Configuration config = entityManagerFactoryBuilder.buildHibernateConfiguration(serviceRegistry);
+
+		return config;
 	}
 	
 	protected static void stringToStream(String[] sql, String filename){
