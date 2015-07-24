@@ -22,8 +22,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Properties;
 
 import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Environment;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.envers.configuration.spi.AuditConfiguration;
 import org.hibernate.envers.tools.hbm2ddl.EnversSchemaGenerator;
@@ -114,6 +116,13 @@ public class HibernateEnversDDL  {
 				
 				HibernateDDL.stringToStream(updateSQL, filename);
 
+				Properties props = new Properties();
+				props.put(PropertiesDataSourceConnectionProvider.PROPERTY, conn);
+				props.setProperty(Environment.CONNECTION_PROVIDER, PropertiesDataSourceConnectionProvider.class.getName());
+				props.setProperty(Environment.DATASOURCE, "nothing");
+				
+				configuration.addProperties(props);
+				
 				configuration.buildMappings();
 				AuditConfiguration.getFor(configuration);
 				SchemaUpdate su = new SchemaUpdate(configuration);
