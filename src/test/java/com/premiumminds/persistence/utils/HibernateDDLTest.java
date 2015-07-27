@@ -64,7 +64,7 @@ public class HibernateDDLTest {
 	public void testUpdateCommand() throws Exception {
 
 		String[] args = new String[]{   "--update", 
-										"application-data-unit-export", 
+										"application-data-unit-export-test", 
 										"jdbc:h2:" + getClass().getResource("/foobar.mv.db").getFile().replace(".mv.db", ""), 
 										"foo", 
 										"bar"};
@@ -81,7 +81,7 @@ public class HibernateDDLTest {
 		file.deleteOnExit();
 		
 		String[] args = new String[] {  "--update", 
-										"application-data-unit-export",
+										"application-data-unit-export-test",
 										"jdbc:h2:" + getClass().getResource("/foobar.mv.db").getFile().replace(".mv.db", ""), 
 										"foo", 
 										"bar",
@@ -97,7 +97,7 @@ public class HibernateDDLTest {
 	@Test
 	public void testCreateCommand() throws Exception {
 
-		String[] args = new String[]{ "--create", "application-data-unit-export"};
+		String[] args = new String[]{ "--create", "application-data-unit-export-test"};
 		
 		HibernateDDL.main(args);
 		
@@ -116,7 +116,7 @@ public class HibernateDDLTest {
 		File file = File.createTempFile("updatedb", ".sql");
 		file.deleteOnExit();
 		
-		String[] args = new String[]{ "--create", "application-data-unit-export", file.getAbsolutePath()};
+		String[] args = new String[]{ "--create", "application-data-unit-export-test", file.getAbsolutePath()};
 		
 		HibernateDDL.main(args);
 		
@@ -133,7 +133,7 @@ public class HibernateDDLTest {
 	@Test
 	public void testCreateDropCommand() throws Exception {
 
-		String[] args = new String[]{ "--create-drop", "application-data-unit-export"};
+		String[] args = new String[]{ "--create-drop", "application-data-unit-export-test"};
 		
 		HibernateDDL.main(args);
 		
@@ -154,7 +154,7 @@ public class HibernateDDLTest {
 		File file = File.createTempFile("updatedb", ".sql");
 		file.deleteOnExit();
 		
-		String[] args = new String[]{ "--create-drop", "application-data-unit-export", file.getAbsolutePath()};
+		String[] args = new String[]{ "--create-drop", "application-data-unit-export-test", file.getAbsolutePath()};
 		
 		HibernateDDL.main(args);
 		

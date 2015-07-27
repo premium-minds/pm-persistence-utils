@@ -64,14 +64,13 @@ public class HibernateEnversDDLTest {
 	public void testUpdateCommand() throws Exception {
 
 		String[] args = new String[]{   "--update", 
-										"application-data-unit-export", 
+										"application-data-unit-export-test", 
 										"jdbc:h2:" + getClass().getResource("/foobar_versioned.mv.db").getFile().replace(".mv.db", ""), 
-										"foo", 
-										"bar"};
+										"foo"};
 		
 		HibernateEnversDDL.main(args);
 
-		assertEquals("Expected unitName jdbcUrl jdbcUsername jdbcPassword filename\n", outContent.toString());
+		assertEquals("Expected unitName jdbcUrl jdbcUsername jdbcPassword [filename]\n", outContent.toString());
 	}
 	
 	@Test
@@ -81,7 +80,7 @@ public class HibernateEnversDDLTest {
 		file.deleteOnExit();
 		
 		String[] args = new String[] {  "--update", 
-										"application-data-unit-export",
+										"application-data-unit-export-test",
 										"jdbc:h2:" + getClass().getResource("/foobar_versioned.mv.db").getFile().replace(".mv.db", ""), 
 										"foo", 
 										"bar",
@@ -99,9 +98,31 @@ public class HibernateEnversDDLTest {
 	}
 
 	@Test
+	public void testUpdateCommandWithoutFile() throws Exception {
+
+		File file = File.createTempFile("updatedb", ".sql");
+		file.deleteOnExit();
+		
+		String[] args = new String[] {  "--update", 
+										"application-data-unit-export-test",
+										"jdbc:h2:" + getClass().getResource("/foobar_versioned.mv.db").getFile().replace(".mv.db", ""), 
+										"foo", 
+										"bar"};
+		
+		HibernateEnversDDL.main(args);
+
+		assertEquals("\n" + 
+					"    alter table FooBar \n" + 
+					"        add column bar integer not null;\n" +
+					"\n" +
+					"    alter table FooBar_AUD \n" + 
+					"        add column bar integer;\n", outContent.toString());
+	}
+	
+	@Test
 	public void testCreateCommand() throws Exception {
 
-		String[] args = new String[]{ "--create", "application-data-unit-export"};
+		String[] args = new String[]{ "--create", "application-data-unit-export-test"};
 		
 		HibernateEnversDDL.main(args);
 		
@@ -114,7 +135,7 @@ public class HibernateEnversDDLTest {
 		File file = File.createTempFile("updatedb", ".sql");
 		file.deleteOnExit();
 		
-		String[] args = new String[]{ "--create", "application-data-unit-export", file.getAbsolutePath()};
+		String[] args = new String[]{ "--create", "application-data-unit-export-test", file.getAbsolutePath()};
 		
 		HibernateEnversDDL.main(args);
 		
@@ -152,7 +173,7 @@ public class HibernateEnversDDLTest {
 	@Test
 	public void testCreateDropCommand() throws Exception {
 
-		String[] args = new String[]{ "--create-drop", "application-data-unit-export"};
+		String[] args = new String[]{ "--create-drop", "application-data-unit-export-test"};
 		
 		HibernateEnversDDL.main(args);
 		
@@ -165,7 +186,7 @@ public class HibernateEnversDDLTest {
 		File file = File.createTempFile("updatedb", ".sql");
 		file.deleteOnExit();
 		
-		String[] args = new String[]{ "--create-drop", "application-data-unit-export", file.getAbsolutePath()};
+		String[] args = new String[]{ "--create-drop", "application-data-unit-export-test", file.getAbsolutePath()};
 		
 		HibernateEnversDDL.main(args);
 		
