@@ -71,7 +71,7 @@ public class HibernateDDL {
 
 	protected static void updateCommand(String[] args) {
 		String unitName, filename=null, url, username, password;
-		if(args.length<5) System.out.println("Expected unitName jdbcUrl jdbcUsername jdbcPassword");
+		if(args.length<5) System.out.println("Expected unitName jdbcUrl jdbcUsername jdbcPassword [filename]");
 		else {
 			unitName = args[1];
 			url = args[2];

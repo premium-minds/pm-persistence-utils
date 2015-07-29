@@ -28,7 +28,6 @@ import org.hibernate.dialect.Dialect;
 import org.hibernate.envers.configuration.spi.AuditConfiguration;
 import org.hibernate.envers.tools.hbm2ddl.EnversSchemaGenerator;
 import org.hibernate.tool.hbm2ddl.DatabaseMetadata;
-import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 import org.hibernate.tool.hbm2ddl.SchemaUpdateScript;
 
 
@@ -90,13 +89,13 @@ public class HibernateEnversDDL  {
 
 	private static void updateCommand(String[] args) {
 		String unitName, filename=null, url, username, password;
-		if(args.length<6) System.out.println("Expected unitName jdbcUrl jdbcUsername jdbcPassword filename");
+		if(args.length<5) System.out.println("Expected unitName jdbcUrl jdbcUsername jdbcPassword [filename]");
 		else {
 			unitName = args[1];
 			url = args[2];
 			username = args[3];
 			password = args[4];
-			filename = args[5];
+			if(args.length>5) filename = args[5];
 			
 			Configuration configuration = HibernateDDL.getConfiguration(unitName);
 			configuration.buildMappings();
@@ -113,14 +112,7 @@ public class HibernateEnversDDL  {
 				String[] updateSQL = SchemaUpdateScript.toStringArray(updateScriptList);
 				
 				HibernateDDL.stringToStream(updateSQL, filename);
-
-				configuration.buildMappings();
-				AuditConfiguration.getFor(configuration);
-				SchemaUpdate su = new SchemaUpdate(configuration);
-				su.setOutputFile(filename);
-				su.setFormat(true);
-				su.setDelimiter(";");
-				su.execute(true, false);
+				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
