@@ -38,7 +38,7 @@ public class JpaGuicePersistenceTransaction implements PersistenceTransaction {
 	private UnitOfWork unitOfWork;
 	private Provider<EntityManager> emp;
 	private ThreadLocal<List<PersistenceTransactionSynchronization>> sync = new ThreadLocal<List<PersistenceTransactionSynchronization>>();
-	
+
 	private ThreadLocal<Boolean> started = new ThreadLocal<Boolean>(){
 		protected Boolean initialValue() { return false; };
 	};
@@ -54,7 +54,7 @@ public class JpaGuicePersistenceTransaction implements PersistenceTransaction {
 		started.set(true);
 		unitOfWork.begin();
 		emp.get().getTransaction().begin();
-		
+
 		log.trace("Jpa transaction started");
 	}
 
@@ -79,8 +79,11 @@ public class JpaGuicePersistenceTransaction implements PersistenceTransaction {
 			}
 		} finally {
 			sync.remove();
-			unitOfWork.end();
-			started.remove();
+			try {
+				unitOfWork.end();
+			} finally {
+				started.remove();
+			}
 		}
 	}
 
