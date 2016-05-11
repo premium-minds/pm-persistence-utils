@@ -59,11 +59,19 @@ public class MultiplePersistenceTransaction implements PersistenceTransaction {
 	public void end() {
 		try {
 			boolean rollback = isRollbackOnly();
+			Exception caughtException = null;
 			for(PersistenceTransaction pt : persistenceTransactions){
+				try {
+					if (caughtException!=null) {
+						pt.setRollbackOnly();
+						rollback = true;
+					}
+				} catch (Exception e) { }
 				try {
 					pt.end();
 				} catch (Exception e) {
 					log.warn("Failed to end transaction at "+pt.getClass().getSimpleName()+": "+e.getMessage());
+					caughtException = e;
 				}
 			}
 			log.debug("Ending application transaction");
@@ -74,6 +82,7 @@ public class MultiplePersistenceTransaction implements PersistenceTransaction {
 					s.afterTransaction(status);
 				}
 			}
+			if(caughtException!=null) throw new RuntimeException(caughtException);
 		} finally {
 			sync.remove();
 		}

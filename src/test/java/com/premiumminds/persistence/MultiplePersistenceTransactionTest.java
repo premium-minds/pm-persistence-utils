@@ -148,7 +148,6 @@ public class MultiplePersistenceTransactionTest extends EasyMockSupport {
 		EasyMock.expectLastCall().once();
 		
 		// set rollback
-		// start
 		t1.setRollbackOnly();
 		EasyMock.expectLastCall().once();
 		t2.setRollbackOnly();
@@ -187,7 +186,6 @@ public class MultiplePersistenceTransactionTest extends EasyMockSupport {
 		EasyMock.expectLastCall().once();
 		
 		// set rollback
-		// start
 		t1.setRollbackOnly();
 		EasyMock.expectLastCall().andThrow(new RuntimeException("some exception in setRollbackOnly"));
 		t2.setRollbackOnly();
@@ -266,6 +264,9 @@ public class MultiplePersistenceTransactionTest extends EasyMockSupport {
 		EasyMock.expect(t2.isRollbackOnly()).andReturn(false);
 		t1.end();
 		EasyMock.expectLastCall().andThrow(new RuntimeException("some exception in end transaction"));
+		// set rollback on second transaction since first ending failed
+		t2.setRollbackOnly();
+		EasyMock.expectLastCall().once();
 		t2.end();
 		
 		// start 2
@@ -275,7 +276,9 @@ public class MultiplePersistenceTransactionTest extends EasyMockSupport {
 		// end 2
 		EasyMock.expect(t1.isRollbackOnly()).andReturn(true);
 		t1.end();
+		EasyMock.expectLastCall().once();
 		t2.end();
+		EasyMock.expectLastCall().once();
 		
 		replayAll();
 		
@@ -287,7 +290,7 @@ public class MultiplePersistenceTransactionTest extends EasyMockSupport {
 		try {
 			tr.end();
 		} catch (Exception e) {
-			fail("should not throw exception anymore");
+			assertEquals("java.lang.RuntimeException: some exception in end transaction", e.getMessage());
 		}
 		try {
 			tr.start();
