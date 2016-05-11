@@ -1,6 +1,7 @@
 package com.premiumminds.persistence;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
@@ -128,8 +129,7 @@ public class MultiplePersistenceTransactionTest extends EasyMockSupport {
 		try {
 			tr.end();
 		} catch(Exception e) {
-			// bug - should still call isRollbackOnly for second transaction and not throw exception
-			assertEquals("some exception in isRollbackOnly", e.getMessage());
+			fail("should not throw exception anymore");
 		}
 		
 		verifyAll();
@@ -210,8 +210,7 @@ public class MultiplePersistenceTransactionTest extends EasyMockSupport {
 		try {
 			tr.setRollbackOnly();
 		} catch (Exception e) {
-			// bug - should still call setRollbackOnly for second transaction
-			assertEquals("some exception in setRollbackOnly", e.getMessage());
+			fail("should not throw exception anymore");
 		}
 		tr.end();
 		
@@ -288,8 +287,7 @@ public class MultiplePersistenceTransactionTest extends EasyMockSupport {
 		try {
 			tr.end();
 		} catch (Exception e) {
-			// bug - should still call end for second transaction
-			assertEquals("some exception in end transaction", e.getMessage());
+			fail("should not throw exception anymore");
 		}
 		try {
 			tr.start();
