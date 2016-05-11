@@ -66,11 +66,13 @@ public class MultiplePersistenceTransaction implements PersistenceTransaction {
 						pt.setRollbackOnly();
 						rollback = true;
 					}
-				} catch (Exception e) { }
+				} catch (Exception e) {
+					log.warn("Failed to setRollbackOnly when ending transaction", e);
+				}
 				try {
 					pt.end();
 				} catch (Exception e) {
-					log.warn("Failed to end transaction at "+pt.getClass().getSimpleName()+": "+e.getMessage());
+					log.warn("Failed to end transaction", e);
 					caughtException = e;
 				}
 			}
@@ -95,7 +97,7 @@ public class MultiplePersistenceTransaction implements PersistenceTransaction {
 			try {
 				pt.setRollbackOnly();
 			} catch (Exception e) {
-				log.warn("Failed to mark transaction "+pt.getClass().getSimpleName()+" for rollback: "+e.getMessage());
+				log.warn("Failed to mark transaction for rollback", e);
 			}
 		}
 	}
@@ -106,7 +108,13 @@ public class MultiplePersistenceTransaction implements PersistenceTransaction {
 			try {
 				if(pt.isRollbackOnly()) return true;
 			} catch (Exception e) {
-				log.warn("Failed to determine rollback status for transaction "+pt.getClass().getSimpleName()+" for rollback: "+e.getMessage());
+				log.warn("Failed to determine rollback status for transaction, trying to set rollback", e);
+				try {
+					setRollbackOnly();
+				} catch (Exception ex) {
+					log.warn("Failed setRollbackOnly: should not happen", e);
+				}
+				return true;
 			}
 		}
 		return false;

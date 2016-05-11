@@ -111,9 +111,15 @@ public class MultiplePersistenceTransactionTest extends EasyMockSupport {
 		t2.start();
 		EasyMock.expectLastCall().once();
 		
-		// end
 		EasyMock.expect(t1.isRollbackOnly()).andThrow(new RuntimeException("some exception in isRollbackOnly"));
-		EasyMock.expect(t2.isRollbackOnly()).andReturn(true);
+		
+		// previous exception requires set rollback afterwards
+		t1.setRollbackOnly();
+		EasyMock.expectLastCall().once();
+		t2.setRollbackOnly();
+		EasyMock.expectLastCall().once();
+		
+		// end
 		t1.end();
 		EasyMock.expectLastCall().once();
 		t2.end();
