@@ -59,8 +59,22 @@ public class MultiplePersistenceTransaction implements PersistenceTransaction {
 	public void end() {
 		try {
 			boolean rollback = isRollbackOnly();
+			Exception caughtException = null;
 			for(PersistenceTransaction pt : persistenceTransactions){
-				pt.end();
+				try {
+					if (caughtException!=null) {
+						pt.setRollbackOnly();
+						rollback = true;
+					}
+				} catch (Exception e) {
+					log.warn("Failed to setRollbackOnly when ending transaction", e);
+				}
+				try {
+					pt.end();
+				} catch (Exception e) {
+					log.warn("Failed to end transaction", e);
+					caughtException = e;
+				}
 			}
 			log.debug("Ending application transaction");
 			if(sync.get()!=null){
@@ -70,6 +84,7 @@ public class MultiplePersistenceTransaction implements PersistenceTransaction {
 					s.afterTransaction(status);
 				}
 			}
+			if(caughtException!=null) throw new RuntimeException(caughtException);
 		} finally {
 			sync.remove();
 		}
@@ -79,14 +94,28 @@ public class MultiplePersistenceTransaction implements PersistenceTransaction {
 	public void setRollbackOnly() {
 		log.debug("Marking application transaction for rollback");
 		for(PersistenceTransaction pt : persistenceTransactions){
-			pt.setRollbackOnly();
+			try {
+				pt.setRollbackOnly();
+			} catch (Exception e) {
+				log.warn("Failed to mark transaction for rollback", e);
+			}
 		}
 	}
 
 	@Override
 	public boolean isRollbackOnly() {
 		for(PersistenceTransaction pt : persistenceTransactions){
-			if(pt.isRollbackOnly()) return true;
+			try {
+				if(pt.isRollbackOnly()) return true;
+			} catch (Exception e) {
+				log.warn("Failed to determine rollback status for transaction, trying to set rollback", e);
+				try {
+					setRollbackOnly();
+				} catch (Exception ex) {
+					log.warn("Failed setRollbackOnly: should not happen", e);
+				}
+				return true;
+			}
 		}
 		return false;
 	}
