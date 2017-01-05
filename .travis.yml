@@ -2,9 +2,11 @@
 
 language: java
 
-# Avoid default OracleJDK7. Complies with Eclipse environment used
 jdk:
-    - openjdk6
+    - oraclejdk8
+
+after_success:
+    - "./share/deploy/deploy-snapshot.sh"
 
 notifications:
     email:
