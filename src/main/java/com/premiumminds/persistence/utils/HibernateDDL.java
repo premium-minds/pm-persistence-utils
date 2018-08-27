@@ -18,35 +18,26 @@
  */
 package com.premiumminds.persistence.utils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceException;
 
-import org.hibernate.cfg.Configuration;
-import org.hibernate.dialect.Dialect;
-import org.hibernate.engine.jdbc.internal.FormatStyle;
-import org.hibernate.engine.jdbc.internal.Formatter;
+import org.hibernate.boot.spi.MetadataImplementor;
 import org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl;
 import org.hibernate.jpa.boot.internal.ParsedPersistenceXmlDescriptor;
 import org.hibernate.jpa.boot.internal.PersistenceXmlParser;
 import org.hibernate.jpa.boot.spi.PersistenceUnitDescriptor;
 import org.hibernate.jpa.boot.spi.ProviderChecker;
-import org.hibernate.service.ServiceRegistry;
-import org.hibernate.tool.hbm2ddl.DatabaseMetadata;
-import org.hibernate.tool.hbm2ddl.SchemaUpdateScript;
+import org.hibernate.tool.hbm2ddl.SchemaExport;
+import org.hibernate.tool.hbm2ddl.SchemaUpdate;
+import org.hibernate.tool.schema.TargetType;
 
 public class HibernateDDL {
-	private final static Formatter formatter = FormatStyle.DDL.getFormatter();
-
 	/**
 	 * --create unitName [filename]
 	 * --create-drop unitName [filename]
@@ -61,40 +52,86 @@ public class HibernateDDL {
 			System.out.println("\t--create-drop unitName [filename] - Create table and drop commands");
 			System.out.println("\t--update unitName jdbcUrl jdbcUsername jdbcPassword [filename] - Alter table commands based on your database");
 			System.out.println("\n\t[filename] is the name of the file where to write (it's optional)");
+		} else if(args.length<5) {
+			System.out.println("Expected unitName jdbcUrl jdbcUsername jdbcPassword [filename]");
 		} else {
-			if("--create".equals(args[0].toLowerCase())) createCommand(args);
-			if("--create-drop".equals(args[0].toLowerCase())) createDropCommand(args);
-			if("--update".equals(args[0].toLowerCase())) updateCommand(args);
-			
-		}
-	}
-
-	protected static void updateCommand(String[] args) {
-		String unitName, filename=null, url, username, password;
-		if(args.length<5) System.out.println("Expected unitName jdbcUrl jdbcUsername jdbcPassword [filename]");
-		else {
+			String unitName, filename=null, url, username, password;
 			unitName = args[1];
 			url = args[2];
 			username = args[3];
 			password = args[4];
 			if(args.length>5) filename = args[5];
-			
-			Configuration config = getConfiguration(unitName);
-			Dialect dialect = Dialect.getDialect(config.getProperties());
-			
-			try {
-				Connection conn = DriverManager.getConnection(url, username, password);
-				
-				DatabaseMetadata meta = new DatabaseMetadata(conn, dialect, config, true);
 
-				List<SchemaUpdateScript> updateScriptList = config.generateSchemaUpdateScriptList(dialect, meta);
-				String[] updateSQL = SchemaUpdateScript.toStringArray(updateScriptList);
+			Map<String, Object>  properties = new HashMap<>();
+			properties.put("javax.persistence.jdbc.url", url);
+			properties.put("javax.persistence.jdbc.user", username);
+			properties.put("javax.persistence.jdbc.password", password);
+			properties.put("hibernate.implicit_naming_strategy", "legacy-hbm");
 
-				stringToStream(updateSQL, filename);
-			} catch (SQLException e) {
-				e.printStackTrace();
+			if("--update".equals(args[0].toLowerCase())) {
+				updateCommand(unitName, properties, filename);
+			}
+			if("--create".equals(args[0].toLowerCase())) {
+				createCommand(unitName, properties, filename);
+			}
+			if("--create-drop".equals(args[0].toLowerCase())) {
+				createDropCommand(unitName, properties, filename);
 			}
 		}
+	}
+
+	protected static void updateCommand(String unitName, Map<String, Object> properties, String filename) {
+		EntityManagerFactoryBuilderImpl entityManagerFactoryBuilder = getEntityManagerFactoryBuilderOrNull(unitName, properties);
+		EntityManagerFactory factory = entityManagerFactoryBuilder.build();
+
+		MetadataImplementor metaData = entityManagerFactoryBuilder.getMetadata();
+
+		SchemaUpdate update = new SchemaUpdate();
+        update.setHaltOnError(true);
+        update.setFormat(true);
+        update.setDelimiter(";");
+        if (filename != null) {
+        	update.setOutputFile(filename);
+        }
+		update.execute(EnumSet.of(filename == null ? TargetType.STDOUT : TargetType.SCRIPT), metaData);
+
+		factory.close();
+	}
+
+	protected static void createCommand(String unitName, Map<String, Object> properties, String filename) {
+		EntityManagerFactoryBuilderImpl entityManagerFactoryBuilder = getEntityManagerFactoryBuilderOrNull(unitName, properties);
+		EntityManagerFactory factory = entityManagerFactoryBuilder.build();
+
+		MetadataImplementor metaData = entityManagerFactoryBuilder.getMetadata();
+
+		SchemaExport export = new SchemaExport();
+        export.setHaltOnError(true);
+        export.setFormat(true);
+        export.setDelimiter(";");
+        if (filename != null) {
+        	export.setOutputFile(filename);
+        }
+		export.execute(EnumSet.of(filename == null ? TargetType.STDOUT : TargetType.SCRIPT), SchemaExport.Action.CREATE, metaData);
+
+		factory.close();
+	}
+
+	protected static void createDropCommand(String unitName, Map<String, Object> properties, String filename) {
+		EntityManagerFactoryBuilderImpl entityManagerFactoryBuilder = getEntityManagerFactoryBuilderOrNull(unitName, properties);
+		EntityManagerFactory factory = entityManagerFactoryBuilder.build();
+
+		MetadataImplementor metaData = entityManagerFactoryBuilder.getMetadata();
+
+		SchemaExport export = new SchemaExport();
+        export.setHaltOnError(true);
+        export.setFormat(true);
+        export.setDelimiter(";");
+        if (filename != null) {
+        	export.setOutputFile(filename);
+        }
+		export.execute(EnumSet.of(filename == null ? TargetType.STDOUT : TargetType.SCRIPT), SchemaExport.Action.BOTH, metaData);
+
+		factory.close();
 	}
 
 	protected static EntityManagerFactoryBuilderImpl getEntityManagerFactoryBuilderOrNull(String persistenceUnitName, Map<String, Object> properties) {
@@ -142,69 +179,4 @@ public class HibernateDDL {
 	protected static Map<String, Object> wrap(Map<String, Object> properties) {
 		return properties == null ? Collections.<String, Object>emptyMap() : Collections.unmodifiableMap( properties );
 	}
-	
-	protected static void createDropCommand(String[] args) {
-		String unitName;
-		String filename=null;
-		if(args.length<2) System.out.println("Expected unitName");
-		else {
-			unitName = args[1];
-			if(args.length>2) filename = args[2];
-			
-			Configuration config = getConfiguration(unitName);
-			
-			String[] dropSQL = config.generateDropSchemaScript(Dialect.getDialect(config.getProperties()));
-			String[] createSQL = config.generateSchemaCreationScript(Dialect.getDialect(config.getProperties()));
-			
-			stringToStream(concat(dropSQL, createSQL), filename);
-		}
-	}
-
-	protected static void createCommand(String[] args) {
-		String unitName;
-		String filename=null;
-		if(args.length<2) System.out.println("Expected unitName");
-		else {
-			unitName = args[1];
-			if(args.length>2) filename = args[2];
-			
-			Configuration config = getConfiguration(unitName);
-			
-			String[] createSQL = config.generateSchemaCreationScript(Dialect.getDialect(config.getProperties()));
-			
-			stringToStream(createSQL, filename);
-		}
-	}
-
-	protected static Configuration getConfiguration(String unitName){
-		EntityManagerFactoryBuilderImpl entityManagerFactoryBuilder = getEntityManagerFactoryBuilderOrNull(unitName, null);
-		
-		ServiceRegistry serviceRegistry = entityManagerFactoryBuilder.buildServiceRegistry();
-		Configuration config = entityManagerFactoryBuilder.buildHibernateConfiguration(serviceRegistry);
-
-		return config;
-	}
-	
-	protected static void stringToStream(String[] sql, String filename){
-		PrintWriter writer;
-		try {
-			if(filename==null) writer = new PrintWriter(System.out);
-			else writer = new PrintWriter(new File(filename));
-			
-			for (String string : sql) {
-				writer.print(formatter.format(string) + ";\n");
-			}
-			
-			writer.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	public static <T> T[] concat(T[] first, T[] second) {
-		T[] result = Arrays.copyOf(first, first.length + second.length);
-		System.arraycopy(second, 0, result, first.length, second.length);
-		return result;
-	}	
 }

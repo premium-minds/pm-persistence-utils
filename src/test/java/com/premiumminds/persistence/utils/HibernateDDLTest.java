@@ -52,12 +52,13 @@ public class HibernateDDLTest {
 		
 		HibernateDDL.main(args);
 		
+		String result = outContent.toString().replaceAll("\r", "");
 		assertEquals("Usage: \n" +  
 					"	--create unitName [filename] - Create table commands\n" + 
 					"	--create-drop unitName [filename] - Create table and drop commands\n" + 
 					"	--update unitName jdbcUrl jdbcUsername jdbcPassword [filename] - Alter table commands based on your database\n" + 
 					"\n" + 
-					"	[filename] is the name of the file where to write (it's optional)\n", outContent.toString());
+					"	[filename] is the name of the file where to write (it's optional)\n", result);
 	}
 
 	@Test
@@ -71,7 +72,9 @@ public class HibernateDDLTest {
 		
 		HibernateDDL.main(args);
 		
-		assertEquals("\n    alter table FooBar \n        add column bar integer not null;\n", outContent.toString());
+		String result = outContent.toString().replaceAll("\r", "");
+		assertTrue(result.startsWith("\n    alter table FOOBAR.PUBLIC.FOOBAR \n       add column bar integer not null;\n"));
+		assertTrue(result.contains("\n    alter table FOOBAR.PUBLIC.FOOBAR_AUD \n       add column bar integer;"));
 	}
 	
 	@Test
@@ -91,23 +94,38 @@ public class HibernateDDLTest {
 
 		assertTrue(outContent.toString().isEmpty());
 		
-		assertEquals("\n    alter table FooBar \n        add column bar integer not null;\n", IOUtils.toString(new FileReader(file)));
+		String result = IOUtils.toString(new FileReader(file)).replaceAll("\r", "");
+		assertTrue(result.startsWith("\n    alter table FOOBAR.PUBLIC.FOOBAR \n       add column bar integer not null;\n"));
+		assertTrue(result.contains("\n    alter table FOOBAR.PUBLIC.FOOBAR_AUD \n       add column bar integer;"));
 	}
 
 	@Test
 	public void testCreateCommand() throws Exception {
 
-		String[] args = new String[]{ "--create", "application-data-unit-export-test"};
+		String[] args = new String[]{ "--create", "application-data-unit-export-test", 
+				"jdbc:h2:" + getClass().getResource("/foobar.mv.db").getFile().replace(".mv.db", ""), 
+				"foo", 
+				"bar"};
 		
 		HibernateDDL.main(args);
 		
-		assertEquals("\n" +
-					"    create table FooBar (\n" +
-					"        id integer not null,\n" +
-					"        bar integer not null,\n" +
-					"        foo varchar(255),\n" +
-					"        primary key (id)\n" +
-					"    );\n", outContent.toString());
+		String result = outContent.toString().replaceAll("\r", "");
+		assertTrue(result.startsWith("\n" +
+				"    create table FooBar (\n" +
+				"       id integer not null,\n" +
+				"        bar integer not null,\n" +
+				"        foo varchar(255),\n" +
+				"        primary key (id)\n" +
+				"    );\n"));
+		assertTrue(result.contains("\n" + 
+				"    create table FooBar_AUD (\n" + 
+				"       id integer not null,\n" + 
+				"        REV integer not null,\n" + 
+				"        REVTYPE tinyint,\n" + 
+				"        bar integer,\n" + 
+				"        foo varchar(255),\n" + 
+				"        primary key (id, REV)\n" + 
+				"    );\n"));
 	}
 	
 	@Test
@@ -116,36 +134,65 @@ public class HibernateDDLTest {
 		File file = File.createTempFile("updatedb", ".sql");
 		file.deleteOnExit();
 		
-		String[] args = new String[]{ "--create", "application-data-unit-export-test", file.getAbsolutePath()};
+		String[] args = new String[]{ "--create", "application-data-unit-export-test", 
+				"jdbc:h2:" + getClass().getResource("/foobar.mv.db").getFile().replace(".mv.db", ""), 
+				"foo", 
+				"bar", file.getAbsolutePath()};
 		
 		HibernateDDL.main(args);
 		
 		assertTrue(outContent.toString().isEmpty());
-		assertEquals("\n" +
-					"    create table FooBar (\n" +
-					"        id integer not null,\n" +
-					"        bar integer not null,\n" +
-					"        foo varchar(255),\n" +
-					"        primary key (id)\n" +
-					"    );\n", IOUtils.toString(new FileReader(file)));
+
+		String result = IOUtils.toString(new FileReader(file)).replaceAll("\r", "");
+		assertTrue(result.startsWith("\n" +
+				"    create table FooBar (\n" +
+				"       id integer not null,\n" +
+				"        bar integer not null,\n" +
+				"        foo varchar(255),\n" +
+				"        primary key (id)\n" +
+				"    );\n"));
+		assertTrue(result.contains("\n" + 
+				"    create table FooBar_AUD (\n" + 
+				"       id integer not null,\n" + 
+				"        REV integer not null,\n" + 
+				"        REVTYPE tinyint,\n" + 
+				"        bar integer,\n" + 
+				"        foo varchar(255),\n" + 
+				"        primary key (id, REV)\n" + 
+				"    );\n"));
 	}
 	
 	@Test
 	public void testCreateDropCommand() throws Exception {
 
-		String[] args = new String[]{ "--create-drop", "application-data-unit-export-test"};
+		String[] args = new String[]{ "--create-drop", "application-data-unit-export-test", 
+				"jdbc:h2:" + getClass().getResource("/foobar.mv.db").getFile().replace(".mv.db", ""), 
+				"foo", 
+				"bar"};
 		
 		HibernateDDL.main(args);
 		
-		assertEquals("\n" +
-					"    drop table FooBar if exists;\n" +
-					"\n" +
-					"    create table FooBar (\n" +
-					"        id integer not null,\n" +
-					"        bar integer not null,\n" +
-					"        foo varchar(255),\n" +
-					"        primary key (id)\n" +
-					"    );\n", outContent.toString());
+		String result = outContent.toString().replaceAll("\r", "");
+		assertTrue(result.startsWith("\n" +
+				"    drop table FooBar if exists;\n"));
+		assertTrue(result.contains("\n" +
+				"    drop table FooBar_AUD if exists;\n"));
+		assertTrue(result.contains("\n" +
+				"    create table FooBar (\n" +
+				"       id integer not null,\n" +
+				"        bar integer not null,\n" +
+				"        foo varchar(255),\n" +
+				"        primary key (id)\n" +
+				"    );\n"));
+		assertTrue(result.contains("\n" + 
+				"    create table FooBar_AUD (\n" + 
+				"       id integer not null,\n" + 
+				"        REV integer not null,\n" + 
+				"        REVTYPE tinyint,\n" + 
+				"        bar integer,\n" + 
+				"        foo varchar(255),\n" + 
+				"        primary key (id, REV)\n" + 
+				"    );\n"));
 	}
 
 	@Test
@@ -154,19 +201,35 @@ public class HibernateDDLTest {
 		File file = File.createTempFile("updatedb", ".sql");
 		file.deleteOnExit();
 		
-		String[] args = new String[]{ "--create-drop", "application-data-unit-export-test", file.getAbsolutePath()};
+		String[] args = new String[]{ "--create-drop", "application-data-unit-export-test", 
+				"jdbc:h2:" + getClass().getResource("/foobar.mv.db").getFile().replace(".mv.db", ""), 
+				"foo", 
+				"bar", file.getAbsolutePath()};
 		
 		HibernateDDL.main(args);
 		
 		assertTrue(outContent.toString().isEmpty());
-		assertEquals("\n" +
-					"    drop table FooBar if exists;\n" +
-					"\n" +
-					"    create table FooBar (\n" +
-					"        id integer not null,\n" +
-					"        bar integer not null,\n" +
-					"        foo varchar(255),\n" +
-					"        primary key (id)\n" +
-					"    );\n", IOUtils.toString(new FileReader(file)));
+
+		String result = IOUtils.toString(new FileReader(file)).replaceAll("\r", "");
+		assertTrue(result.startsWith("\n" +
+				"    drop table FooBar if exists;\n"));
+		assertTrue(result.contains("\n" +
+				"    drop table FooBar_AUD if exists;\n"));
+		assertTrue(result.contains("\n" +
+				"    create table FooBar (\n" +
+				"       id integer not null,\n" +
+				"        bar integer not null,\n" +
+				"        foo varchar(255),\n" +
+				"        primary key (id)\n" +
+				"    );\n"));
+		assertTrue(result.contains("\n" + 
+				"    create table FooBar_AUD (\n" + 
+				"       id integer not null,\n" + 
+				"        REV integer not null,\n" + 
+				"        REVTYPE tinyint,\n" + 
+				"        bar integer,\n" + 
+				"        foo varchar(255),\n" + 
+				"        primary key (id, REV)\n" + 
+				"    );\n"));
 	}
 }
