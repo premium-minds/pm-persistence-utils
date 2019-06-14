@@ -53,7 +53,14 @@ public class JpaGuicePersistenceTransaction implements PersistenceTransaction {
 		if(started.get()) throw new RuntimeException("transaction already started");
 		started.set(true);
 		unitOfWork.begin();
-		emp.get().getTransaction().begin();
+		try {
+			emp.get().getTransaction().begin();
+		} catch (Exception e) {
+			log.error("problem starting transaction", e);
+			unitOfWork.end();
+			started.remove();
+			throw e;
+		}
 
 		log.trace("Jpa transaction started");
 	}
