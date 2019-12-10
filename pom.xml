@@ -36,6 +36,10 @@
 			<name>André Camilo</name>
 			<organization>Premium Minds</organization>
 		</developer>
+		<developer>
+			<name>Filipe Roque</name>
+			<organization>Premium Minds</organization>
+		</developer>
 	</developers>
 
 	<properties>
