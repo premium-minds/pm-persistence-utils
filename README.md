@@ -5,13 +5,15 @@ A library with utils for JPA persistence applications, and some Hibernate stuff
 
 ## Maven projects
 
+![Maven Central](https://img.shields.io/maven-central/v/com.premiumminds/pm-persistence-utils)
+
 Add the following maven dependency to your project `pom.xml`:
 
 ```xml
 <dependency>
    <groupId>com.premiumminds</groupId>
    <artifactId>pm-persistence-utils</artifactId>
-   <version>2.0</version>
+   <version>2.1</version>
 </dependency>
 ```
 Check out [sonatype repository](https://oss.sonatype.org/index.html#nexus-search;quick~pm-persistence-utils) for latest snapshots and releases.
