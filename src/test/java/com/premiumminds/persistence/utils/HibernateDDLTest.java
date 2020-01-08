@@ -73,8 +73,8 @@ public class HibernateDDLTest {
 		HibernateDDL.main(args);
 		
 		String result = outContent.toString().replaceAll("\r", "");
-		assertTrue(result.startsWith("\n    alter table FOOBAR.PUBLIC.FOOBAR \n       add column bar integer not null;\n"));
-		assertTrue(result.contains("\n    alter table FOOBAR.PUBLIC.FOOBAR_AUD \n       add column bar integer;"));
+		assertTrue(result.contains("\n    alter table FooBar \n       add column bar integer not null;\n"));
+		assertTrue(result.contains("\n    alter table FooBar_AUD \n       add column bar integer;"));
 	}
 	
 	@Test
@@ -95,8 +95,8 @@ public class HibernateDDLTest {
 		assertTrue(outContent.toString().isEmpty());
 		
 		String result = IOUtils.toString(new FileReader(file)).replaceAll("\r", "");
-		assertTrue(result.startsWith("\n    alter table FOOBAR.PUBLIC.FOOBAR \n       add column bar integer not null;\n"));
-		assertTrue(result.contains("\n    alter table FOOBAR.PUBLIC.FOOBAR_AUD \n       add column bar integer;"));
+		assertTrue(result.contains("\n    alter table FooBar \n       add column bar integer not null;\n"));
+		assertTrue(result.contains("\n    alter table FooBar_AUD \n       add column bar integer;"));
 	}
 
 	@Test
