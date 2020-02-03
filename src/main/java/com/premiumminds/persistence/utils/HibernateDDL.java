@@ -66,7 +66,6 @@ public class HibernateDDL {
 			properties.put("javax.persistence.jdbc.url", url);
 			properties.put("javax.persistence.jdbc.user", username);
 			properties.put("javax.persistence.jdbc.password", password);
-			properties.put("hibernate.implicit_naming_strategy", "legacy-hbm");
 
 			if("--update".equals(args[0].toLowerCase())) {
 				updateCommand(unitName, properties, filename);
