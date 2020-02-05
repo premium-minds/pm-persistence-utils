@@ -13,7 +13,7 @@ Add the following maven dependency to your project `pom.xml`:
 <dependency>
    <groupId>com.premiumminds</groupId>
    <artifactId>pm-persistence-utils</artifactId>
-   <version>2.1</version>
+   <version>2.2</version>
 </dependency>
 ```
 Check out [sonatype repository](https://oss.sonatype.org/index.html#nexus-search;quick~pm-persistence-utils) for latest snapshots and releases.
