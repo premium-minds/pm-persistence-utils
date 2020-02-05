@@ -23,6 +23,10 @@
  - [Bump maven-compiler-plugin from 2.3.2 to 3.8.1](https://github.com/premium-minds/pm-persistence-utils/pull/12)
  - [Bump maven-gpg-plugin from 1.5 to 1.6](https://github.com/premium-minds/pm-persistence-utils/pull/13)
  - [Bump easymock from 3.6 to 4.1](https://github.com/premium-minds/pm-persistence-utils/pull/14)
+
+### Added 
+
+ - Added maven-scm-api
  
 ## [2.1]
 
