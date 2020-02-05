@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [2.2]
+
 ### Removed
  - [Remove hardcoded value for hibernate.implicit_naming_strategy](https://github.com/premium-minds/pm-persistence-utils/pull/27)
  
@@ -62,6 +64,7 @@
  - [upgarde Hibernate version from 4.1.7.Final to 4.3.10.Final](https://github.com/premium-minds/pm-persistence-utils/pull/2)
 
 [unreleased]: https://github.com/premium-minds/pm-persistence-utils/compare/v2.1...HEAD
+[2.1]: https://github.com/premium-minds/pm-persistence-utils/compare/v2.1...v2.2
 [2.1]: https://github.com/premium-minds/pm-persistence-utils/compare/v2.0...v2.1
 [2.0]: https://github.com/premium-minds/pm-persistence-utils/compare/v1.2...v2.0
 [1.2]: https://github.com/premium-minds/pm-persistence-utils/compare/v1.1...v1.2
