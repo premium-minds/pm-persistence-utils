@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+ - [Bump maven-javadoc-plugin from 3.1.1 to 3.2.0](https://github.com/premium-minds/pm-persistence-utils/pull/28)
+
 ## [2.2]
 
 ### Removed
@@ -63,8 +67,8 @@
 
  - [upgarde Hibernate version from 4.1.7.Final to 4.3.10.Final](https://github.com/premium-minds/pm-persistence-utils/pull/2)
 
-[unreleased]: https://github.com/premium-minds/pm-persistence-utils/compare/v2.1...HEAD
-[2.1]: https://github.com/premium-minds/pm-persistence-utils/compare/v2.1...v2.2
+[unreleased]: https://github.com/premium-minds/pm-persistence-utils/compare/v2.2...HEAD
+[2.2]: https://github.com/premium-minds/pm-persistence-utils/compare/v2.1...v2.2
 [2.1]: https://github.com/premium-minds/pm-persistence-utils/compare/v2.0...v2.1
 [2.0]: https://github.com/premium-minds/pm-persistence-utils/compare/v1.2...v2.0
 [1.2]: https://github.com/premium-minds/pm-persistence-utils/compare/v1.1...v1.2
