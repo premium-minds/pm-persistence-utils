@@ -7,6 +7,7 @@
  - [Bump maven-javadoc-plugin from 3.1.1 to 3.2.0](https://github.com/premium-minds/pm-persistence-utils/pull/28)
  - [Bump guice-persist from 4.2.2 to 4.2.3](https://github.com/premium-minds/pm-persistence-utils/pull/29)
  - [Bump commons-io from 2.6 to 2.7](https://github.com/premium-minds/pm-persistence-utils/pull/30)
+ - [Bump commons-io from 2.7 to 2.8.0](https://github.com/premium-minds/pm-persistence-utils/pull/31)
 
 ## [2.2]
 
