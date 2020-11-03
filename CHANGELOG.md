@@ -9,6 +9,7 @@
  - [Bump commons-io from 2.6 to 2.7](https://github.com/premium-minds/pm-persistence-utils/pull/30)
  - [Bump commons-io from 2.7 to 2.8.0](https://github.com/premium-minds/pm-persistence-utils/pull/31)
  - [[Security] Bump junit from 4.13 to 4.13.1](https://github.com/premium-minds/pm-persistence-utils/pull/32)
+ - [Bump hibernate.version from 5.4.10.Final to 5.4.23.Final](https://github.com/premium-minds/pm-persistence-utils/pull/33)
 
 ## [2.2]
 
