@@ -174,9 +174,9 @@ public class HibernateDDLTest {
 		
 		String result = outContent.toString().replaceAll("\r", "");
 		assertTrue(result.startsWith("\n" +
-				"    drop table FooBar if exists;\n"));
+				"    drop table if exists FooBar CASCADE ;\n"));
 		assertTrue(result.contains("\n" +
-				"    drop table FooBar_AUD if exists;\n"));
+				"    drop table if exists FooBar_AUD CASCADE ;\n"));
 		assertTrue(result.contains("\n" +
 				"    create table FooBar (\n" +
 				"       id integer not null,\n" +
@@ -212,9 +212,9 @@ public class HibernateDDLTest {
 
 		String result = IOUtils.toString(new FileReader(file)).replaceAll("\r", "");
 		assertTrue(result.startsWith("\n" +
-				"    drop table FooBar if exists;\n"));
+				"    drop table if exists FooBar CASCADE ;\n"));
 		assertTrue(result.contains("\n" +
-				"    drop table FooBar_AUD if exists;\n"));
+				"    drop table if exists FooBar_AUD CASCADE ;\n"));
 		assertTrue(result.contains("\n" +
 				"    create table FooBar (\n" +
 				"       id integer not null,\n" +
