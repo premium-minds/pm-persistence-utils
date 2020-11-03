@@ -8,6 +8,7 @@
  - [Bump guice-persist from 4.2.2 to 4.2.3](https://github.com/premium-minds/pm-persistence-utils/pull/29)
  - [Bump commons-io from 2.6 to 2.7](https://github.com/premium-minds/pm-persistence-utils/pull/30)
  - [Bump commons-io from 2.7 to 2.8.0](https://github.com/premium-minds/pm-persistence-utils/pull/31)
+ - [[Security] Bump junit from 4.13 to 4.13.1](https://github.com/premium-minds/pm-persistence-utils/pull/32)
 
 ## [2.2]
 
