@@ -16,6 +16,7 @@
  - [Bump maven-scm-publish-plugin from 3.0.0 to 3.1.0](https://github.com/premium-minds/pm-persistence-utils/pull/37)
  - [Bump junit-jupiter-engine from 5.7.0 to 5.7.1 ](https://github.com/premium-minds/pm-persistence-utils/pull/38)
  - [Bump easymock from 4.2 to 4.3](https://github.com/premium-minds/pm-persistence-utils/pull/42)
+ - [Bump maven-gpg-plugin from 1.6 to 3.0.1](https://github.com/premium-minds/pm-persistence-utils/pull/45)
  
 ## [2.2]
 
