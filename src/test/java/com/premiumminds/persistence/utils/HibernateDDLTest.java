@@ -23,10 +23,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileReader;
 import java.io.PrintStream;
+import java.nio.file.Files;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -94,7 +93,7 @@ public class HibernateDDLTest {
 
 		assertTrue(outContent.toString().isEmpty());
 		
-		String result = IOUtils.toString(new FileReader(file)).replaceAll("\r", "");
+		String result = new String(Files.readAllBytes(file.toPath()));
 		assertTrue(result.contains("\n    alter table FooBar \n       add column bar integer not null;\n"));
 		assertTrue(result.contains("\n    alter table FooBar_AUD \n       add column bar integer;"));
 	}
@@ -143,7 +142,7 @@ public class HibernateDDLTest {
 		
 		assertTrue(outContent.toString().isEmpty());
 
-		String result = IOUtils.toString(new FileReader(file)).replaceAll("\r", "");
+		String result = new String(Files.readAllBytes(file.toPath()));
 		assertTrue(result.startsWith("\n" +
 				"    create table FooBar (\n" +
 				"       id integer not null,\n" +
@@ -210,7 +209,7 @@ public class HibernateDDLTest {
 		
 		assertTrue(outContent.toString().isEmpty());
 
-		String result = IOUtils.toString(new FileReader(file)).replaceAll("\r", "");
+		String result = new String(Files.readAllBytes(file.toPath()));
 		assertTrue(result.startsWith("\n" +
 				"    drop table if exists FooBar CASCADE ;\n"));
 		assertTrue(result.contains("\n" +
