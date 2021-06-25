@@ -4,21 +4,22 @@
 
 ### Changed
 
- - [Bump maven-javadoc-plugin from 3.1.1 to 3.2.0](https://github.com/premium-minds/pm-persistence-utils/pull/28)
  - [Bump guice-persist from 4.2.2 to 4.2.3](https://github.com/premium-minds/pm-persistence-utils/pull/29)
  - [Bump commons-io from 2.6 to 2.7](https://github.com/premium-minds/pm-persistence-utils/pull/30)
  - [Bump commons-io from 2.7 to 2.8.0](https://github.com/premium-minds/pm-persistence-utils/pull/31)
- - [[Security] Bump junit from 4.13 to 4.13.1](https://github.com/premium-minds/pm-persistence-utils/pull/32)
  - [Bump hibernate.version from 5.4.10.Final to 5.4.23.Final](https://github.com/premium-minds/pm-persistence-utils/pull/33)
- - [Bump to junit 5](https://github.com/premium-minds/pm-persistence-utils/pull/34)
  - [Bump hibernate.version from 5.4.23.Final to 5.4.24.Final](https://github.com/premium-minds/pm-persistence-utils/pull/35)
  - [Bump hibernate.version from 5.4.24.Final to 5.4.27.Final](https://github.com/premium-minds/pm-persistence-utils/pull/36)
- - [Bump maven-scm-publish-plugin from 3.0.0 to 3.1.0](https://github.com/premium-minds/pm-persistence-utils/pull/37)
+ - [Bump slf4j-api from 1.7.30 to 1.7.31](https://github.com/premium-minds/pm-persistence-utils/pull/50)
+ - [[Security] Bump junit from 4.13 to 4.13.1](https://github.com/premium-minds/pm-persistence-utils/pull/32)
+ - [Bump to junit 5](https://github.com/premium-minds/pm-persistence-utils/pull/34)
  - [Bump junit-jupiter-engine from 5.7.0 to 5.7.1 ](https://github.com/premium-minds/pm-persistence-utils/pull/38)
+ - [Bump junit-jupiter-engine from 5.7.1 to 5.7.2](https://github.com/premium-minds/pm-persistence-utils/pull/46)
  - [Bump easymock from 4.2 to 4.3](https://github.com/premium-minds/pm-persistence-utils/pull/42)
  - [Bump maven-gpg-plugin from 1.6 to 3.0.1](https://github.com/premium-minds/pm-persistence-utils/pull/45)
- - [Bump junit-jupiter-engine from 5.7.1 to 5.7.2](https://github.com/premium-minds/pm-persistence-utils/pull/46)
+ - [Bump maven-javadoc-plugin from 3.1.1 to 3.2.0](https://github.com/premium-minds/pm-persistence-utils/pull/28)
  - [Bump maven-javadoc-plugin from 3.2.0 to 3.3.0](https://github.com/premium-minds/pm-persistence-utils/pull/47)
+ - [Bump maven-scm-publish-plugin from 3.0.0 to 3.1.0](https://github.com/premium-minds/pm-persistence-utils/pull/37)
 
 ### Removed
 
