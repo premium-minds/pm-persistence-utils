@@ -43,7 +43,7 @@
 	</developers>
 
 	<properties>
-		<hibernate.version>5.4.27.Final</hibernate.version>
+		<hibernate.version>5.5.3.Final</hibernate.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
