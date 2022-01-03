@@ -35,6 +35,7 @@
  - [Bump maven-scm-provider-gitexe from 1.11.3 to 1.12.0](https://github.com/premium-minds/pm-persistence-utils/pull/61)
  - [Bump maven-scm-api from 1.11.2 to 1.11.3](https://github.com/premium-minds/pm-persistence-utils/pull/55)
  - [Bump maven-scm-api from 1.11.3 to 1.12.0](https://github.com/premium-minds/pm-persistence-utils/pull/60)
+ - [Bump maven-scm-api from 1.12.0 to 1.12.2](https://github.com/premium-minds/pm-persistence-utils/pull/69)
 
 ### Removed
 
