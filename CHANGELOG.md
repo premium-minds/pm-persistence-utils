@@ -18,6 +18,7 @@
  - [Bump hibernate.version from 5.6.1.Final to 5.6.2.Final](https://github.com/premium-minds/pm-persistence-utils/pull/67)
  - [Bump hibernate.version from 5.6.2.Final to 5.6.3.Final](https://github.com/premium-minds/pm-persistence-utils/pull/72)
  - [Bump hibernate.version from 5.6.3.Final to 5.6.4.Final](https://github.com/premium-minds/pm-persistence-utils/pull/76)
+ - [Bump hibernate.version from 5.6.4.Final to 5.6.5.Final](https://github.com/premium-minds/pm-persistence-utils/pull/77)
  - [Bump slf4j-api from 1.7.30 to 1.7.31](https://github.com/premium-minds/pm-persistence-utils/pull/50)
  - [Bump slf4j-api from 1.7.31 to 1.7.32](https://github.com/premium-minds/pm-persistence-utils/pull/52)
  - [Bump slf4j-api from 1.7.32 to 1.7.33](https://github.com/premium-minds/pm-persistence-utils/pull/74)
