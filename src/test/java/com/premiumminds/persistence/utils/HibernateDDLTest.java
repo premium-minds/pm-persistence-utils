@@ -25,6 +25,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
 import java.nio.file.Files;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.UUID;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -63,11 +68,16 @@ public class HibernateDDLTest {
 	@Test
 	public void testUpdateCommand() throws Exception {
 
-		String[] args = new String[]{   "--update", 
-										"application-data-unit-export-test", 
-										"jdbc:h2:" + getClass().getResource("/foobar.mv.db").getFile().replace(".mv.db", ""), 
-										"foo", 
-										"bar"};
+		String url = "jdbc:h2:/tmp/test" + UUID.randomUUID();
+		String username = "foo";
+		String password = "bar";
+		createDataBase(url, username, password);
+
+		String[] args = new String[]{   "--update",
+				"application-data-unit-export-test",
+				url,
+				username,
+				password};
 		
 		HibernateDDL.main(args);
 		
@@ -75,18 +85,23 @@ public class HibernateDDLTest {
 		assertTrue(result.contains("\n    alter table FooBar \n       add column bar integer not null;\n"));
 		assertTrue(result.contains("\n    alter table FooBar_AUD \n       add column bar integer;"));
 	}
-	
+
 	@Test
 	public void testUpdateCommandWithFile() throws Exception {
 
 		File file = File.createTempFile("updatedb", ".sql");
 		file.deleteOnExit();
-		
+
+		String url = "jdbc:h2:/tmp/test" + UUID.randomUUID();
+		String username = "foo";
+		String password = "bar";
+		createDataBase(url, username, password);
+
 		String[] args = new String[] {  "--update", 
 										"application-data-unit-export-test",
-										"jdbc:h2:" + getClass().getResource("/foobar.mv.db").getFile().replace(".mv.db", ""), 
-										"foo", 
-										"bar",
+										url,
+										username,
+										password,
 										file.getAbsolutePath()};
 		
 		HibernateDDL.main(args);
@@ -101,10 +116,15 @@ public class HibernateDDLTest {
 	@Test
 	public void testCreateCommand() throws Exception {
 
-		String[] args = new String[]{ "--create", "application-data-unit-export-test", 
-				"jdbc:h2:" + getClass().getResource("/foobar.mv.db").getFile().replace(".mv.db", ""), 
-				"foo", 
-				"bar"};
+		String url = "jdbc:h2:/tmp/test" + UUID.randomUUID();
+		String username = "foo";
+		String password = "bar";
+		createDataBase(url, username, password);
+
+		String[] args = new String[]{ "--create", "application-data-unit-export-test",
+				url,
+				username,
+				password};
 		
 		HibernateDDL.main(args);
 		
@@ -132,11 +152,16 @@ public class HibernateDDLTest {
 
 		File file = File.createTempFile("updatedb", ".sql");
 		file.deleteOnExit();
-		
-		String[] args = new String[]{ "--create", "application-data-unit-export-test", 
-				"jdbc:h2:" + getClass().getResource("/foobar.mv.db").getFile().replace(".mv.db", ""), 
-				"foo", 
-				"bar", file.getAbsolutePath()};
+
+		String url = "jdbc:h2:/tmp/test" + UUID.randomUUID();
+		String username = "foo";
+		String password = "bar";
+		createDataBase(url, username, password);
+
+		String[] args = new String[]{ "--create", "application-data-unit-export-test",
+				url,
+				username,
+				password, file.getAbsolutePath()};
 		
 		HibernateDDL.main(args);
 		
@@ -164,10 +189,15 @@ public class HibernateDDLTest {
 	@Test
 	public void testCreateDropCommand() throws Exception {
 
-		String[] args = new String[]{ "--create-drop", "application-data-unit-export-test", 
-				"jdbc:h2:" + getClass().getResource("/foobar.mv.db").getFile().replace(".mv.db", ""), 
-				"foo", 
-				"bar"};
+		String url = "jdbc:h2:/tmp/test" + UUID.randomUUID();
+		String username = "foo";
+		String password = "bar";
+		createDataBase(url, username, password);
+
+		String[] args = new String[]{ "--create-drop", "application-data-unit-export-test",
+				url,
+				username,
+				password};
 		
 		HibernateDDL.main(args);
 		
@@ -199,11 +229,16 @@ public class HibernateDDLTest {
 
 		File file = File.createTempFile("updatedb", ".sql");
 		file.deleteOnExit();
-		
-		String[] args = new String[]{ "--create-drop", "application-data-unit-export-test", 
-				"jdbc:h2:" + getClass().getResource("/foobar.mv.db").getFile().replace(".mv.db", ""), 
-				"foo", 
-				"bar", file.getAbsolutePath()};
+
+		String url = "jdbc:h2:/tmp/test" + UUID.randomUUID();
+		String username = "foo";
+		String password = "bar";
+		createDataBase(url, username, password);
+
+		String[] args = new String[]{ "--create-drop", "application-data-unit-export-test",
+				url,
+				username,
+				password, file.getAbsolutePath()};
 		
 		HibernateDDL.main(args);
 		
@@ -230,5 +265,31 @@ public class HibernateDDLTest {
 				"        foo varchar(255),\n" + 
 				"        primary key (id, REV)\n" + 
 				"    );\n"));
+	}
+
+	private void createDataBase(String url, String username, String password) throws SQLException {
+		try (Connection conn = DriverManager.getConnection(url, username, password)) {
+			try (Statement statement = conn.createStatement()) {
+				statement.executeUpdate("CREATE SEQUENCE \"PUBLIC\".\"SYSTEM_SEQUENCE_EDACC4F5_A213_4A1E_9499_E4C8964302C2\" START WITH 1 BELONGS_TO_TABLE; ");
+				statement.executeUpdate("CREATE TABLE PUBLIC.FOOBAR ( " +
+						" ID INTEGER NOT NULL, " +
+						" FOO VARCHAR(255), " +
+						" CONSTRAINT CONSTRAINT_7 PRIMARY KEY (ID) " +
+						"); ");
+				statement.executeUpdate("CREATE TABLE PUBLIC.REVINFO ( " +
+						" REV INTEGER DEFAULT (NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_EDACC4F5_A213_4A1E_9499_E4C8964302C2) NOT NULL AUTO_INCREMENT, " +
+						" REVTSTMP BIGINT, " +
+						" CONSTRAINT CONSTRAINT_6 PRIMARY KEY (REV) " +
+						"); ");
+				statement.executeUpdate("CREATE TABLE PUBLIC.FOOBAR_AUD ( " +
+						" ID INTEGER NOT NULL, " +
+						" REV INTEGER NOT NULL, " +
+						" REVTYPE TINYINT, " +
+						" FOO VARCHAR(255), " +
+						" CONSTRAINT CONSTRAINT_B PRIMARY KEY (ID,REV), " +
+						" CONSTRAINT FK_HQ6LVB9TWE0IDLWIWQ4LOCY79 FOREIGN KEY (REV) REFERENCES PUBLIC.REVINFO(REV) ON DELETE RESTRICT ON UPDATE RESTRICT " +
+						"); ");
+			}
+		}
 	}
 }
