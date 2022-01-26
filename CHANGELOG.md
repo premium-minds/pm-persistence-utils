@@ -31,6 +31,7 @@
  - [Bump junit-jupiter-engine from 5.8.0 to 5.8.1](https://github.com/premium-minds/pm-persistence-utils/pull/62)
  - [Bump junit-jupiter-engine from 5.8.1 to 5.8.2](https://github.com/premium-minds/pm-persistence-utils/pull/65)
  - [Bump easymock from 4.2 to 4.3](https://github.com/premium-minds/pm-persistence-utils/pull/42)
+ - [Bump h2 from 1.4.200 to 2.1.210](https://github.com/premium-minds/pm-persistence-utils/pull/75)
  - [Bump maven-gpg-plugin from 1.6 to 3.0.1](https://github.com/premium-minds/pm-persistence-utils/pull/45)
  - [Bump maven-javadoc-plugin from 3.1.1 to 3.2.0](https://github.com/premium-minds/pm-persistence-utils/pull/28)
  - [Bump maven-javadoc-plugin from 3.2.0 to 3.3.0](https://github.com/premium-minds/pm-persistence-utils/pull/47)
