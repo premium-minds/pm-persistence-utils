@@ -46,6 +46,7 @@
  - [Bump maven-scm-api from 1.11.3 to 1.12.0](https://github.com/premium-minds/pm-persistence-utils/pull/60)
  - [Bump maven-scm-api from 1.12.0 to 1.12.2](https://github.com/premium-minds/pm-persistence-utils/pull/69)
  - [Bump maven-compiler-plugin from 3.8.1 to 3.9.0](https://github.com/premium-minds/pm-persistence-utils/pull/73)
+ - [Bump maven-compiler-plugin from 3.9.0 to 3.10.0](https://github.com/premium-minds/pm-persistence-utils/pull/82)
 
 ### Removed
 
