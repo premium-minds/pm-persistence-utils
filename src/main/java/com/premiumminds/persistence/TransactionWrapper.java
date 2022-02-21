@@ -98,7 +98,7 @@ public abstract class TransactionWrapper<T> {
 	}
 
 	/**
-	 * Sets the transaction to be commited
+	 * Sets the transaction to be committed
 	 */
 	public void commit() {
 		em.getTransaction().commit();

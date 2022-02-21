@@ -102,7 +102,7 @@
 
  - [MultiplePersistenceTransaction receiving any exceptions in first inner transaction prevent any further transactions being opened/closed](https://github.com/premium-minds/pm-persistence-utils/pull/5)
  - [Postgres service shutdown at Transaction End](https://github.com/premium-minds/pm-persistence-utils/pull/4)
- - [O hibernateEnversDDL usa agora as configuracoes passadas como parametros no SchemaUpdate](https://github.com/premium-minds/pm-persistence-utils/pull/3)
+ - [hibernateEnversDDL now uses configs as parameters in SchemaUpdate](https://github.com/premium-minds/pm-persistence-utils/pull/3)
  
 ## [1.1]
 
@@ -112,7 +112,7 @@
 
 ### Changed
 
- - [upgarde Hibernate version from 4.1.7.Final to 4.3.10.Final](https://github.com/premium-minds/pm-persistence-utils/pull/2)
+ - [upgrade Hibernate version from 4.1.7.Final to 4.3.10.Final](https://github.com/premium-minds/pm-persistence-utils/pull/2)
 
 [unreleased]: https://github.com/premium-minds/pm-persistence-utils/compare/v2.2...HEAD
 [2.2]: https://github.com/premium-minds/pm-persistence-utils/compare/v2.1...v2.2
