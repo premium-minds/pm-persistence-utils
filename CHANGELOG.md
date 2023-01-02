@@ -43,6 +43,7 @@
  - [Bump junit-jupiter-engine from 5.9.0 to 5.9.1](https://github.com/premium-minds/pm-persistence-utils/pull/104)
  - [Bump easymock from 4.2 to 4.3](https://github.com/premium-minds/pm-persistence-utils/pull/42)
  - [Bump easymock from 4.3 to 5.0.1](https://github.com/premium-minds/pm-persistence-utils/pull/108)
+ - [Bump easymock from 5.0.1 to 5.1.0](https://github.com/premium-minds/pm-persistence-utils/pull/113)
  - [Bump h2 from 1.4.200 to 2.1.210](https://github.com/premium-minds/pm-persistence-utils/pull/75)
  - [Bump h2 from 2.1.210 to 2.1.212](https://github.com/premium-minds/pm-persistence-utils/pull/89)
  - [Bump h2 from 2.1.212 to 2.1.214](https://github.com/premium-minds/pm-persistence-utils/pull/96)
