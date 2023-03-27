@@ -62,10 +62,12 @@
  - [Bump maven-scm-provider-gitexe from 1.11.3 to 1.12.0](https://github.com/premium-minds/pm-persistence-utils/pull/61)
  - [Bump maven-scm-provider-gitexe from 1.12.0 to 1.12.2](https://github.com/premium-minds/pm-persistence-utils/pull/70)
  - [Bump maven-scm-provider-gitexe from 1.12.2 to 1.13.0](https://github.com/premium-minds/pm-persistence-utils/pull/94)
+ - [Bump maven-scm-provider-gitexe from 1.13.0 to 2.0.0](https://github.com/premium-minds/pm-persistence-utils/pull/120)
  - [Bump maven-scm-api from 1.11.2 to 1.11.3](https://github.com/premium-minds/pm-persistence-utils/pull/55)
  - [Bump maven-scm-api from 1.11.3 to 1.12.0](https://github.com/premium-minds/pm-persistence-utils/pull/60)
  - [Bump maven-scm-api from 1.12.0 to 1.12.2](https://github.com/premium-minds/pm-persistence-utils/pull/69)
  - [Bump maven-scm-api from 1.12.2 to 1.13.0](https://github.com/premium-minds/pm-persistence-utils/pull/95)
+ - [Bump maven-scm-api from 1.13.0 to 2.0.0](https://github.com/premium-minds/pm-persistence-utils/pull/121)
  - [Bump maven-compiler-plugin from 3.8.1 to 3.9.0](https://github.com/premium-minds/pm-persistence-utils/pull/73)
  - [Bump maven-compiler-plugin from 3.9.0 to 3.10.0](https://github.com/premium-minds/pm-persistence-utils/pull/82)
  - [Bump maven-compiler-plugin from 3.10.0 to 3.10.1](https://github.com/premium-minds/pm-persistence-utils/pull/86)
@@ -74,6 +76,7 @@
  - [Bump nexus-staging-maven-plugin from 1.6.11 to 1.6.12](https://github.com/premium-minds/pm-persistence-utils/pull/85)
  - [Bump nexus-staging-maven-plugin from 1.6.12 to 1.6.13](https://github.com/premium-minds/pm-persistence-utils/pull/92)
  - [Bump maven-surefire-plugin from 2.22.2 to 3.0.0](https://github.com/premium-minds/pm-persistence-utils/pull/118)
+ - [Bump maven-release-plugin from 2.5.3 to 3.0.0](https://github.com/premium-minds/pm-persistence-utils/pull/122)
 
 ### Removed
 
