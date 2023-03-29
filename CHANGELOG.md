@@ -58,6 +58,7 @@
  - [Bump maven-javadoc-plugin from 3.4.0 to 3.4.1](https://github.com/premium-minds/pm-persistence-utils/pull/99)
  - [Bump maven-javadoc-plugin from 3.4.1 to 3.5.0](https://github.com/premium-minds/pm-persistence-utils/pull/116)
  - [Bump maven-scm-publish-plugin from 3.0.0 to 3.1.0](https://github.com/premium-minds/pm-persistence-utils/pull/37)
+ - [Bump maven-scm-publish-plugin from 3.1.0 to 3.2.1](https://github.com/premium-minds/pm-persistence-utils/pull/123)
  - [Bump maven-scm-provider-gitexe from 1.11.2 to 1.11.3](https://github.com/premium-minds/pm-persistence-utils/pull/54)
  - [Bump maven-scm-provider-gitexe from 1.11.3 to 1.12.0](https://github.com/premium-minds/pm-persistence-utils/pull/61)
  - [Bump maven-scm-provider-gitexe from 1.12.0 to 1.12.2](https://github.com/premium-minds/pm-persistence-utils/pull/70)
