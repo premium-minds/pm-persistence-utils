@@ -78,6 +78,7 @@
  - [Bump nexus-staging-maven-plugin from 1.6.11 to 1.6.12](https://github.com/premium-minds/pm-persistence-utils/pull/85)
  - [Bump nexus-staging-maven-plugin from 1.6.12 to 1.6.13](https://github.com/premium-minds/pm-persistence-utils/pull/92)
  - [Bump maven-surefire-plugin from 2.22.2 to 3.0.0](https://github.com/premium-minds/pm-persistence-utils/pull/118)
+ - [Bump maven-surefire-plugin from 3.0.0 to 3.1.0](https://github.com/premium-minds/pm-persistence-utils/pull/125)
  - [Bump maven-release-plugin from 2.5.3 to 3.0.0](https://github.com/premium-minds/pm-persistence-utils/pull/122)
 
 ### Removed
