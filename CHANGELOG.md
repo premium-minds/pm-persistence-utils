@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+ - [Adds Automatic-Module-Name](https://github.com/premium-minds/pm-persistence-utils/pull/133)
+
 ### Changed
 
  - [Bump guice-persist from 4.2.2 to 4.2.3](https://github.com/premium-minds/pm-persistence-utils/pull/29)
