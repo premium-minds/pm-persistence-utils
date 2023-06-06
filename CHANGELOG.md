@@ -5,6 +5,7 @@
 ### Changed
 
  - [Bump maven-release-plugin from 3.0.0 to 3.0.1](https://github.com/premium-minds/pm-persistence-utils/pull/134)
+ - [Bump maven-surefire-plugin from 3.1.0 to 3.1.2](https://github.com/premium-minds/pm-persistence-utils/pull/135)
 
 ## [2.3] (2023-06-05)
 
