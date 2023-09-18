@@ -7,6 +7,7 @@
  - [Bump org.easymock:easymock from 5.1.0 to 5.2.0](https://github.com/premium-minds/pm-persistence-utils/pull/138)
  - [Bump h2 from 2.1.214 to 2.2.220](https://github.com/premium-minds/pm-persistence-utils/pull/136)
  - [Bump com.h2database:h2 from 2.2.220 to 2.2.222](https://github.com/premium-minds/pm-persistence-utils/pull/139)
+ - [Bump com.h2database:h2 from 2.2.222 to 2.2.224](https://github.com/premium-minds/pm-persistence-utils/pull/142)
  - [Bump org.junit.jupiter:junit-jupiter-engine from 5.9.3 to 5.10.0](https://github.com/premium-minds/pm-persistence-utils/pull/137)
  - [Bump maven-release-plugin from 3.0.0 to 3.0.1](https://github.com/premium-minds/pm-persistence-utils/pull/134)
  - [Bump maven-surefire-plugin from 3.1.0 to 3.1.2](https://github.com/premium-minds/pm-persistence-utils/pull/135)
