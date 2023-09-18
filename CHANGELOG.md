@@ -10,6 +10,7 @@
  - [Bump org.junit.jupiter:junit-jupiter-engine from 5.9.3 to 5.10.0](https://github.com/premium-minds/pm-persistence-utils/pull/137)
  - [Bump maven-release-plugin from 3.0.0 to 3.0.1](https://github.com/premium-minds/pm-persistence-utils/pull/134)
  - [Bump maven-surefire-plugin from 3.1.0 to 3.1.2](https://github.com/premium-minds/pm-persistence-utils/pull/135)
+ - [Bump org.apache.maven.plugins:maven-javadoc-plugin from 3.5.0 to 3.6.0](https://github.com/premium-minds/pm-persistence-utils/pull/141)
 
 ## [2.3] (2023-06-05)
 
