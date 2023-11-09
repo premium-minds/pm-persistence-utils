@@ -9,10 +9,13 @@
  - [Bump com.h2database:h2 from 2.2.220 to 2.2.222](https://github.com/premium-minds/pm-persistence-utils/pull/139)
  - [Bump com.h2database:h2 from 2.2.222 to 2.2.224](https://github.com/premium-minds/pm-persistence-utils/pull/142)
  - [Bump org.junit.jupiter:junit-jupiter-engine from 5.9.3 to 5.10.0](https://github.com/premium-minds/pm-persistence-utils/pull/137)
+ - [Bump org.junit.jupiter:junit-jupiter-engine from 5.10.0 to 5.10.1](https://github.com/premium-minds/pm-persistence-utils/pull/144)
  - [Bump maven-release-plugin from 3.0.0 to 3.0.1](https://github.com/premium-minds/pm-persistence-utils/pull/134)
  - [Bump maven-surefire-plugin from 3.1.0 to 3.1.2](https://github.com/premium-minds/pm-persistence-utils/pull/135)
  - [Bump org.apache.maven.plugins:maven-surefire-plugin from 3.1.2 to 3.2.1](https://github.com/premium-minds/pm-persistence-utils/pull/143)
+ - [Bump org.apache.maven.plugins:maven-surefire-plugin from 3.2.1 to 3.2.2](https://github.com/premium-minds/pm-persistence-utils/pull/146)
  - [Bump org.apache.maven.plugins:maven-javadoc-plugin from 3.5.0 to 3.6.0](https://github.com/premium-minds/pm-persistence-utils/pull/141)
+ - [Bump org.apache.maven.plugins:maven-javadoc-plugin from 3.6.0 to 3.6.2](https://github.com/premium-minds/pm-persistence-utils/pull/145)
 
 ## [2.3] (2023-06-05)
 
